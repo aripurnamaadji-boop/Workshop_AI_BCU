@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getSql } from "../_lib/db.js";
-import { requireAuth } from "../_lib/auth.js";
-import { ensureChatTables, titleFromMessage } from "../_lib/chat.js";
-import { buildBcuDigest, latestPeriod } from "../_lib/bcuDigest.js";
-import { callAi, type ChatMessage } from "../_lib/aiClient.js";
+import { getSql } from "../db.js";
+import { requireAuth } from "../auth.js";
+import { ensureChatTables, titleFromMessage } from "../chat.js";
+import { buildBcuDigest, latestPeriod } from "../bcuDigest.js";
+import { callAi, type ChatMessage } from "../aiClient.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {

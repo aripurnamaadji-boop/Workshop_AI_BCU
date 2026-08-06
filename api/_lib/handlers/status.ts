@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { neon } from "@neondatabase/serverless";
 import { put } from "@vercel/blob";
-import { firstEnv, DB_URL_KEYS, AI_KEY_KEYS, BLOB_TOKEN_KEY } from "./_lib/env.js";
+import { firstEnv, DB_URL_KEYS, AI_KEY_KEYS, BLOB_TOKEN_KEY } from "../env.js";
 
 type CheckResult = { ok: boolean; detail: string; envVar?: string };
 

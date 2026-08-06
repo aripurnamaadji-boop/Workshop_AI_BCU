@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getSql } from "../../_lib/db.js";
-import { requireAuth } from "../../_lib/auth.js";
-import { ensureChatTables } from "../../_lib/chat.js";
+import { getSql } from "../db.js";
+import { requireAuth } from "../auth.js";
+import { ensureChatTables } from "../chat.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const user = await requireAuth(req, res);

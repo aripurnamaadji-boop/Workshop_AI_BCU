@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { requireAuth } from "../_lib/auth.js";
-import { buildBcuDigest } from "../_lib/bcuDigest.js";
-import { callAi } from "../_lib/aiClient.js";
+import { requireAuth } from "../auth.js";
+import { buildBcuDigest } from "../bcuDigest.js";
+import { callAi } from "../aiClient.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {

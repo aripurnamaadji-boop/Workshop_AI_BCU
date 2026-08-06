@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getSql } from "../_lib/db.js";
-import { ensureAuthTables, hashPassword } from "../_lib/auth.js";
+import { getSql } from "../db.js";
+import { ensureAuthTables, hashPassword } from "../auth.js";
 
 const INITIAL_USERNAME = "muhamad.adji";
 const INITIAL_PASSWORD = "Bumitama2027";
