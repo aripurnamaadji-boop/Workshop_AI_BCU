@@ -5,7 +5,7 @@ export const G = "#1f6f4a";
 export const A = "#b77a12";
 export const R = "#b3261e";
 
-export type ScreenId = "dashboard" | "coverage" | "people" | "hours" | "eval" | "analysis";
+export type ScreenId = "dashboard" | "coverage" | "people" | "hours" | "eval" | "analysis" | "update-data";
 
 export const navDef: { id: ScreenId; label: string; num: string; path: string }[] = [
   { id: "dashboard", label: "Dashboard", num: "01", path: "M2 2h5v5H2zM9 2h5v5H9zM2 9h5v5H2zM9 9h5v5H9z" },
@@ -14,6 +14,7 @@ export const navDef: { id: ScreenId; label: string; num: string; path: string }[
   { id: "hours", label: "Training Hours & Days", num: "04", path: "M3 13V6M6.5 13V3M10 13V8M13.5 13v-4" },
   { id: "eval", label: "Training Evaluation", num: "05", path: "M8 2.2l1.8 3.7 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4L2.2 6.5l4-.6z" },
   { id: "analysis", label: "Training Analysis", num: "06", path: "M2 13.5h12M4 11V7M7.3 11V4M10.6 11V8.5M13.9 11V5.5" },
+  { id: "update-data", label: "Update Data", num: "07", path: "M8 2v8M8 2 4.5 5.5M8 2l3.5 3.5M2.5 11v1.5A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V11" },
 ];
 
 export const titles: Record<ScreenId, string> = {
@@ -23,6 +24,7 @@ export const titles: Record<ScreenId, string> = {
   hours: "Training Hours & Days",
   eval: "Training Evaluation",
   analysis: "Training Analysis",
+  "update-data": "Update Data",
 };
 
 export const filters = [

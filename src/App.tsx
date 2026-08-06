@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Coverage from "./pages/Coverage";
 import PeopleDevelopment from "./pages/PeopleDevelopment";
 import EmptyModule from "./pages/EmptyModule";
+import UpdateData from "./pages/UpdateData";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="hours" element={<EmptyModule title="Training Hours & Days" />} />
           <Route path="eval" element={<EmptyModule title="Training Evaluation" />} />
           <Route path="analysis" element={<EmptyModule title="Training Analysis" />} />
+          <Route path="update-data" element={<UpdateData />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
       </Routes>

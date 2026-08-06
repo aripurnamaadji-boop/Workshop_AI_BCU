@@ -13,6 +13,7 @@ const mobileChips: Record<ScreenId, string[]> = {
   hours: ["Q3 2026"],
   eval: ["Q3 2026"],
   analysis: ["Q3 2026"],
+  "update-data": [],
 };
 
 export default function AppShell() {

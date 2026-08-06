@@ -1,0 +1,179 @@
+.page {
+  padding: 20px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.toolbar {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.toolbarLeft,
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fieldLabel {
+  font: 600 11px var(--font-sans);
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.select {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-input);
+  background: #fff;
+  font: 500 12.5px var(--font-sans);
+  color: var(--ink);
+}
+
+.ghostBtn {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 5px;
+  border: 1px solid var(--border-input);
+  background: #fff;
+  color: var(--ink-mid);
+  font: 600 12px var(--font-sans);
+  cursor: pointer;
+}
+.ghostBtn:hover {
+  background: var(--content-bg);
+}
+
+.saveBtn {
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 5px;
+  border: none;
+  background: var(--green);
+  color: #fff;
+  font: 600 12.5px var(--font-sans);
+  cursor: pointer;
+}
+.saveBtn:hover {
+  background: var(--green-hover);
+}
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.savedMsg {
+  font: 600 12px var(--font-sans);
+  color: var(--green);
+}
+.errorMsg {
+  font: 600 12px var(--font-sans);
+  color: var(--red);
+}
+
+.stateCard {
+  padding: 40px;
+  text-align: center;
+  font: 500 13px var(--font-sans);
+  color: var(--ink-muted);
+}
+
+.groupCard {
+  padding: 14px 16px 6px;
+}
+
+.groupTitle {
+  font: 700 13px var(--font-sans);
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.table th {
+  text-align: right;
+  font: 600 10.5px var(--font-sans);
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.thLeft {
+  text-align: left !important;
+}
+
+.table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border-soft);
+  text-align: right;
+  vertical-align: middle;
+}
+
+.totalRow {
+  background: var(--content-bg);
+}
+.totalRow .approach {
+  font-weight: 700;
+}
+
+.sasaran {
+  font: 400 10.5px var(--font-sans);
+  color: var(--ink-faint);
+}
+
+.approach {
+  font: 600 12.5px var(--font-sans);
+  color: var(--ink);
+}
+
+.noLabel {
+  color: var(--ink-faint-2);
+  font-weight: 500;
+}
+
+.units {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.numStatic {
+  font: 600 12.5px var(--font-mono);
+  color: var(--ink-mid);
+}
+
+.numInput {
+  width: 72px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-input);
+  text-align: right;
+  font: 600 12px var(--font-mono);
+  color: var(--ink);
+}
+.numInput:focus {
+  outline: 2px solid var(--green-tint-2);
+  border-color: var(--green);
+}
