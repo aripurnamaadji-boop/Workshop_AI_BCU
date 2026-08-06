@@ -6,6 +6,9 @@ export default function Sidebar({ open, onNavigate }: { open: boolean; onNavigat
   return (
     <>
       <aside className={`${styles.sidebar} ${open ? styles.open : ""}`}>
+        <div className={styles.logoRow}>
+          <img src="/bcu-logo.png" alt="Bumitama Corporate University" className={styles.logoImg} />
+        </div>
         <div className={styles.brandRow}>
           <div className={styles.brandMark}>B</div>
           <div>
