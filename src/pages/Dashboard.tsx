@@ -105,10 +105,12 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {!loading && data && data.rows.length === 0 && (
-        <Card style={{ padding: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <div style={{ font: "500 12.5px var(--font-sans)", color: "var(--ink-muted)" }}>
-            Belum ada data BCU Development Program di database. Muat data awal dari laporan SdBi Juni 2026 dulu.
+      {!loading && (loadError || (data && data.rows.length === 0)) && (
+        <Card style={{ padding: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ font: "500 12.5px var(--font-sans)", color: loadError ? "var(--red)" : "var(--ink-muted)" }}>
+            {loadError
+              ? `${loadError} — kemungkinan tabel database belum di-seed. Coba klik "Muat data awal".`
+              : "Belum ada data BCU Development Program di database. Muat data awal dari laporan SdBi Juni 2026 dulu."}
           </div>
           <button
             onClick={handleSeed}
@@ -128,9 +130,6 @@ export default function Dashboard() {
             {seeding ? "Memuat..." : "Muat data awal"}
           </button>
         </Card>
-      )}
-      {loadError && (
-        <Card style={{ padding: 14, font: "500 12.5px var(--font-sans)", color: "var(--red)" }}>{loadError}</Card>
       )}
 
       <div className={styles.mainGrid}>
