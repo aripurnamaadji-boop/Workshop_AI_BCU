@@ -1,0 +1,261 @@
+.page {
+  padding: 20px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.headline {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  background: var(--sidebar-bg);
+  border-radius: 8px;
+}
+.headlineIcon {
+  flex: none;
+  margin-top: 1px;
+}
+.headlineTag {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--sidebar-live);
+}
+.headlineText {
+  font: 500 13.5px/1.55 var(--font-sans);
+  color: #fff;
+  margin-top: 4px;
+  max-width: 900px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .twoCol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.panelCard,
+.tableCardCompact {
+  padding: 14px 16px 16px;
+}
+
+.cardTitle {
+  font: 600 14px var(--font-sans);
+  color: var(--ink);
+}
+.cardSub {
+  font: 400 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+/* Category distribution */
+.catList {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-top: 14px;
+}
+.catHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.catLabel {
+  font: 600 12px var(--font-sans);
+  color: var(--ink-mid);
+}
+.catVal {
+  font: 600 12px var(--font-sans);
+  color: var(--ink);
+}
+.catValMuted {
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+.catTrack {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--border-soft);
+  margin-top: 5px;
+  overflow: hidden;
+}
+.catFill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Trend chart */
+.trendLegend {
+  display: flex;
+  gap: 14px;
+  margin-top: 4px;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 11px var(--font-sans);
+  color: var(--ink-muted);
+}
+.legendSwatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+
+/* Level chart */
+.levelChart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+.levelBarWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.levelTrack {
+  position: relative;
+  height: 9px;
+  border-radius: 5px;
+  background: var(--border-soft);
+}
+.levelFill {
+  height: 100%;
+  border-radius: 5px;
+}
+.levelTarget {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--ink);
+  opacity: 0.35;
+}
+.levelFoot {
+  display: flex;
+  justify-content: space-between;
+}
+.levelLabel {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-mid);
+}
+.levelVal {
+  font: 600 12px var(--font-sans);
+  color: var(--ink);
+}
+
+/* Gap table */
+.gapList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.gapRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.gapUnit {
+  font: 600 12.5px var(--font-sans);
+  color: var(--ink);
+}
+.gapHours {
+  font: 400 10.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+.gapVal {
+  font: 700 13px var(--font-sans);
+  flex: none;
+}
+.gapUnitLabel {
+  font-weight: 400;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+}
+.gapDelta {
+  font: 600 11.5px var(--font-sans);
+  width: 42px;
+  text-align: right;
+  flex: none;
+}
+
+/* Recommendations */
+.recoSection {
+  margin-top: 4px;
+}
+.recoHead {
+  margin-bottom: 12px;
+}
+.recoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+@media (max-width: 960px) {
+  .recoGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.recoCard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--green);
+  border-radius: 6px;
+  padding: 16px;
+}
+.recoNum {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--green-tint);
+  color: var(--green);
+  display: grid;
+  place-items: center;
+  font: 700 12px var(--font-sans);
+}
+.recoHorizon {
+  font: 700 9.5px var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin-top: 12px;
+}
+.recoTitle {
+  font: 700 13.5px/1.35 var(--font-sans);
+  color: var(--ink);
+  margin-top: 6px;
+}
+.recoRationale {
+  font: 400 11.5px/1.55 var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 8px;
+}
+.recoOwner {
+  font: 600 10.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}

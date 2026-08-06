@@ -5,7 +5,7 @@ export const G = "#1f6f4a";
 export const A = "#b77a12";
 export const R = "#b3261e";
 
-export type ScreenId = "dashboard" | "coverage" | "people" | "hours" | "eval" | "analysis" | "update-data";
+export type ScreenId = "dashboard" | "coverage" | "people" | "hours" | "eval" | "analysis" | "update-data" | "assistant";
 
 export const navDef: { id: ScreenId; label: string; num: string; path: string }[] = [
   { id: "dashboard", label: "Dashboard", num: "01", path: "M2 2h5v5H2zM9 2h5v5H9zM2 9h5v5H2zM9 9h5v5H9z" },
@@ -15,6 +15,7 @@ export const navDef: { id: ScreenId; label: string; num: string; path: string }[
   { id: "eval", label: "Training Evaluation", num: "05", path: "M8 2.2l1.8 3.7 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4L2.2 6.5l4-.6z" },
   { id: "analysis", label: "Training Analysis", num: "06", path: "M2 13.5h12M4 11V7M7.3 11V4M10.6 11V8.5M13.9 11V5.5" },
   { id: "update-data", label: "Update Data", num: "07", path: "M8 2v8M8 2 4.5 5.5M8 2l3.5 3.5M2.5 11v1.5A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V11" },
+  { id: "assistant", label: "Assistant AI", num: "08", path: "M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6A1.5 1.5 0 0 1 12.5 11H8l-3.2 2.6a.4.4 0 0 1-.65-.31V11h-.65A1.5 1.5 0 0 1 2 9.5z" },
 ];
 
 export const titles: Record<ScreenId, string> = {
@@ -25,6 +26,7 @@ export const titles: Record<ScreenId, string> = {
   eval: "Training Evaluation",
   analysis: "Training Analysis",
   "update-data": "Update Data",
+  assistant: "Assistant AI",
 };
 
 export const filters = [
@@ -493,3 +495,79 @@ export const jobCompetency = {
     },
   ],
 };
+
+// ============================================================
+// Training Hours & Days — disusun gaya McKinsey (headline insight,
+// distribusi & tren, lalu rekomendasi 3-horizon).
+// Placeholder konsisten dengan angka "Total training hours" & "rata-rata
+// jam/karyawan" yang sudah dipakai di Dashboard, menunggu data LMS asli.
+// ============================================================
+
+export const hoursKpis = [
+  { label: "Total jam pelatihan", value: "128.940", unit: "jam", delta: "+12,4%", note: "vs Q2 2026", deltaColor: G, bar: 68 },
+  { label: "Rata-rata jam / karyawan", value: "11,2", unit: "jam", delta: "−4,8 jam", note: "dari target 16 jam", deltaColor: A, bar: 70 },
+  { label: "Total hari pelatihan", value: "3.226", unit: "hari", delta: "+9,1%", note: "vs Q2 2026", deltaColor: G, bar: 64 },
+  { label: "Rata-rata durasi / batch", value: "2,8", unit: "hari", delta: "−0,4 hari", note: "dari standar 3,2 hari", deltaColor: A, bar: 58 },
+];
+
+export const hoursHeadline =
+  "Realisasi jam pelatihan tumbuh 12,4% dari kuartal lalu, tapi masih 30% di bawah target tahunan. Gap terbesar ada pada tenaga non-staff — durasi rata-rata per batch turun ke 2,8 hari, di bawah standar 3,2 hari, berisiko menggerus kedalaman materi teknikal.";
+
+export const hoursByCategory: { label: string; hours: number; days: number; color: string }[] = [
+  { label: "Killer — Staff", hours: 18420, days: 512, color: G },
+  { label: "Killer — Non-Staff", hours: 61280, days: 1704, color: "#2f5d7c" },
+  { label: "Reguler", hours: 9840, days: 268, color: "#c99a2e" },
+  { label: "Mandatory", hours: 12360, days: 344, color: A },
+  { label: "Talent Development", hours: 27040, days: 398, color: "#7c4a2f" },
+];
+
+export const hoursTrend: { m: string; target: number; actual: number }[] = [
+  { m: "Jan", target: 18000, actual: 15200 },
+  { m: "Feb", target: 18000, actual: 16800 },
+  { m: "Mar", target: 19000, actual: 17100 },
+  { m: "Apr", target: 19500, actual: 18400 },
+  { m: "Mei", target: 20000, actual: 19600 },
+  { m: "Jun", target: 21000, actual: 21200 },
+];
+
+export const hoursByLevel: { level: string; actual: number; target: number }[] = [
+  { level: "Pemanen/Perawatan", actual: 9.8, target: 16 },
+  { level: "Mandor", actual: 12.4, target: 16 },
+  { level: "Asisten", actual: 14.1, target: 16 },
+  { level: "Askep", actual: 15.0, target: 16 },
+  { level: "Manager", actual: 16.8, target: 16 },
+];
+
+export const hoursByRegion: { unit: string; hours: number; actual: number; target: number }[] = [
+  { unit: "Estate Bukit Santuai", hours: 14200, actual: 13.6, target: 16 },
+  { unit: "Estate Sungai Cempaga", hours: 12850, actual: 12.9, target: 16 },
+  { unit: "Estate Katingan Hilir", hours: 8100, actual: 8.9, target: 16 },
+  { unit: "Estate Seruyan Hulu", hours: 10600, actual: 10.7, target: 16 },
+  { unit: "PKS Kotawaringin", hours: 9200, actual: 13.2, target: 16 },
+  { unit: "Estate Ketapang Utara", hours: 13100, actual: 14.8, target: 16 },
+  { unit: "Estate Sanggau Barat", hours: 9840, actual: 11.5, target: 16 },
+  { unit: "PKS Sanggau", hours: 6300, actual: 8.1, target: 16 },
+  { unit: "Estate Sintang Raya", hours: 11200, actual: 13.9, target: 16 },
+];
+
+export const hoursRecommendations: { horizon: string; title: string; rationale: string; owner: string }[] = [
+  {
+    horizon: "SEKARANG · 0–3 BULAN",
+    title: "Percepat penjadwalan ulang batch non-staff yang tertunda di Kalteng",
+    rationale:
+      "Killer Non-Staff menyumbang 48% dari total jam pelatihan, namun Estate Katingan Hilir dan PKS Sanggau realisasinya 7–8 poin di bawah rata-rata BGA.",
+    owner: "PIC Regional Kalteng · Tim BCU",
+  },
+  {
+    horizon: "BERIKUTNYA · 3–6 BULAN",
+    title: "Kunci standar durasi minimum 3,2 hari per batch teknikal",
+    rationale: "Rata-rata durasi turun ke 2,8 hari akibat pemadatan jadwal — berisiko menurunkan kedalaman materi dan retensi peserta.",
+    owner: "Learning Design Team",
+  },
+  {
+    horizon: "JANGKA PANJANG · 6–12 BULAN",
+    title: "Bangun kapasitas trainer internal di level Mandor/Asisten",
+    rationale: "Ketergantungan pada trainer eksternal membatasi kecepatan reschedule kelas yang tertunda karena benturan operasional.",
+    owner: "BCU Leadership",
+  },
+];
