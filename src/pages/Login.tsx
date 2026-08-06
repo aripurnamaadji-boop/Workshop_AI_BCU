@@ -12,10 +12,27 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [setupLoading, setSetupLoading] = useState(false);
+  const [setupMsg, setSetupMsg] = useState<string | null>(null);
 
   if (!loading && user) {
     const redirectTo = (location.state as { from?: string } | null)?.from ?? "/dashboard";
     return <Navigate to={redirectTo} replace />;
+  }
+
+  async function handleSetup() {
+    setSetupLoading(true);
+    setSetupMsg(null);
+    try {
+      const res = await fetch("/api/auth/seed", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Setup gagal");
+      setSetupMsg(data.seeded ? "Akun awal berhasil dibuat. Silakan login." : "Akun sudah pernah di-setup sebelumnya — coba login.");
+    } catch (err) {
+      setSetupMsg(err instanceof Error ? err.message : String(err));
+    } finally {
+      setSetupLoading(false);
+    }
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -73,6 +90,13 @@ export default function Login() {
             {submitting ? "Memproses..." : "Masuk"}
           </button>
         </form>
+
+        <div className={styles.setupRow}>
+          {setupMsg && <div className={styles.setupMsg}>{setupMsg}</div>}
+          <button className={styles.setupLink} onClick={handleSetup} disabled={setupLoading} type="button">
+            {setupLoading ? "Menyiapkan akun awal..." : "Pertama kali? Setup akun awal"}
+          </button>
+        </div>
       </div>
     </div>
   );
