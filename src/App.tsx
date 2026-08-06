@@ -5,6 +5,8 @@ import Coverage from "./pages/Coverage";
 import PeopleDevelopment from "./pages/PeopleDevelopment";
 import EmptyModule from "./pages/EmptyModule";
 import UpdateData from "./pages/UpdateData";
+import TrainingEvaluation from "./pages/TrainingEvaluation";
+import TrainingAnalysis from "./pages/TrainingAnalysis";
 
 function App() {
   return (
@@ -16,8 +18,8 @@ function App() {
           <Route path="coverage" element={<Coverage />} />
           <Route path="people" element={<PeopleDevelopment />} />
           <Route path="hours" element={<EmptyModule title="Training Hours & Days" />} />
-          <Route path="eval" element={<EmptyModule title="Training Evaluation" />} />
-          <Route path="analysis" element={<EmptyModule title="Training Analysis" />} />
+          <Route path="eval" element={<TrainingEvaluation />} />
+          <Route path="analysis" element={<TrainingAnalysis />} />
           <Route path="update-data" element={<UpdateData />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>

@@ -283,3 +283,213 @@ export function mobilePrograms(tab: "killer" | "regular" | "talent") {
     return { name, actual, plan, pct, color: statusOf(pct)[3] };
   });
 }
+
+// ============================================================
+// Training Evaluation — HC Service Excellent (SIKU & evaluasi pasca pelatihan)
+// Sumber: Monitoring Dashboard BCU Program, Juni 2026
+// ============================================================
+
+export const evalKpis = [
+  { label: "Skor SIKU (kepuasan mentor)", value: "7,68", unit: "/ 10", delta: "Puas", note: "standar minimum 7,0", deltaColor: G, bar: 77 },
+  { label: "Skor kepuasan pasca pelatihan", value: "95,9", unit: "/ 100", delta: "267", note: "feedback masuk", deltaColor: G, bar: 96 },
+  { label: "Lulusan BDP dinilai", value: "53", unit: "/ 55", delta: "96%", note: "coverage penilaian mentor", deltaColor: G, bar: 96 },
+  { label: "Sangat puas + puas", value: "44", unit: "/ 55", delta: "80%", note: "distribusi kepuasan SIKU", deltaColor: G, bar: 80 },
+];
+
+export type SikuCriteria = "adaptasi" | "resiliensi" | "analitik" | "skala" | "need" | "komunikasi" | "teamwork";
+
+export const sikuCriteriaLabels: Record<SikuCriteria, string> = {
+  adaptasi: "Adaptasi",
+  resiliensi: "Resiliensi",
+  analitik: "Analitik Sintetik",
+  skala: "Skala Prioritas",
+  need: "Need Achievement",
+  komunikasi: "Communication",
+  teamwork: "Teamwork",
+};
+
+export const sikuPrograms: {
+  program: string;
+  totalLulusan: number;
+  dinilai: number;
+  puas: number;
+  tidakPuas: number;
+  scores: Record<SikuCriteria, number>;
+  nilai: number;
+  ket: string;
+}[] = [
+  {
+    program: "BDPE",
+    totalLulusan: 24,
+    dinilai: 21,
+    puas: 21,
+    tidakPuas: 0,
+    scores: { adaptasi: 77.8, resiliensi: 78.7, analitik: 73.2, skala: 72.3, need: 77.4, komunikasi: 78.1, teamwork: 78.6 },
+    nilai: 76.6,
+    ket: "Memenuhi Standar",
+  },
+  {
+    program: "BDPA",
+    totalLulusan: 76,
+    dinilai: 20,
+    puas: 20,
+    tidakPuas: 0,
+    scores: { adaptasi: 78.8, resiliensi: 73.9, analitik: 74.4, skala: 79.5, need: 78.4, komunikasi: 78.3, teamwork: 78.4 },
+    nilai: 77.4,
+    ket: "Memenuhi Standar",
+  },
+  {
+    program: "BDPK",
+    totalLulusan: 51,
+    dinilai: 12,
+    puas: 12,
+    tidakPuas: 0,
+    scores: { adaptasi: 71.3, resiliensi: 79.6, analitik: 71.9, skala: 75.7, need: 76.8, komunikasi: 81.0, teamwork: 79.6 },
+    nilai: 76.5,
+    ket: "Memenuhi Standar",
+  },
+];
+
+export const sikuTotal = {
+  totalLulusan: 151,
+  dinilai: 53,
+  puas: 53,
+  tidakPuas: 0,
+  scores: { adaptasi: 76.0, resiliensi: 77.4, analitik: 73.2, skala: 75.8, need: 77.5, komunikasi: 79.1, teamwork: 78.9 } as Record<SikuCriteria, number>,
+  nilai: 76.8,
+};
+
+export const sikuDistribution: { label: string; n: number; pct: number; color: string }[] = [
+  { label: "Sangat Puas", n: 1, pct: 2, color: G },
+  { label: "Puas", n: 43, pct: 78, color: G },
+  { label: "Cukup Puas", n: 11, pct: 20, color: A },
+  { label: "Tidak Puas", n: 0, pct: 0, color: R },
+  { label: "Sangat Tidak Puas", n: 0, pct: 0, color: R },
+];
+
+export const reactionEval: { label: string; score: number; pct: number }[] = [
+  { label: "Materi", score: 4.8, pct: 96.7 },
+  { label: "Trainer", score: 4.8, pct: 95.4 },
+  { label: "Fasilitas", score: 4.7, pct: 94.2 },
+  { label: "Manfaat", score: 4.9, pct: 97.2 },
+];
+
+// ============================================================
+// Training Analysis — KPI 5 (Acting Readiness), KPI 6 (Talent Development),
+// KPI 7 (Job-based Competency Fulfillment)
+// Sumber: Monitoring Dashboard BCU Program, Juni 2026
+// ============================================================
+
+export const analysisKpis = [
+  { label: "Talent dikembangkan", value: "67", unit: "%", delta: "87/130", note: "populasi talent pool", deltaColor: G, bar: 67 },
+  { label: "Staf acting", value: "212", unit: "orang", delta: "113+99", note: "Batch 1 + Batch 2", deltaColor: G, bar: 60 },
+  { label: "Promosi Batch 1", value: "85", unit: "%", delta: "74/87", note: "peserta prajabatan", deltaColor: G, bar: 85 },
+  { label: "Realisasi job competency", value: "51", unit: "%", delta: "288/565", note: "peserta BCP", deltaColor: A, bar: 51 },
+  { label: "Batch BCP selesai", value: "52", unit: "%", delta: "11/21", note: "batch terlaksana", deltaColor: A, bar: 52 },
+];
+
+export const actingReadiness = {
+  totalStaf: 212,
+  batch1: 113,
+  batch1Window: "Nov 2025 – Feb 2026",
+  batch2: 99,
+  batch2Window: "Agu 2026 – Feb 2027",
+  outcomeTotal: 87,
+  outcomes: [
+    { label: "Dipromosikan", n: 74, pct: 85, color: G, note: "Langsung ke peran definitif" },
+    { label: "Evaluasi CDR", n: 10, pct: 11, color: A, note: "Pematangan sebelum promosi" },
+    { label: "Tidak dipromosikan", n: 3, pct: 3, color: R, note: "Kembali ke role asal" },
+  ],
+};
+
+export const talentDev = {
+  pct: 67,
+  developed: 87,
+  total: 130,
+  groups: [
+    {
+      label: "Operasional",
+      pct: 70,
+      rows: [
+        { role: "Manager / Sr. Specialist", n: 24, total: 30, pct: 80 },
+        { role: "Head Assistant / Specialist", n: 22, total: 29, pct: 76 },
+        { role: "Assistant / Staff", n: 14, total: 35, pct: 40 },
+      ],
+    },
+    {
+      label: "Head Office",
+      pct: 58,
+      rows: [
+        { role: "Dept. Head / Sr. Specialist", n: 6, total: 17, pct: 35 },
+        { role: "Sect. Head / Specialist", n: 12, total: 14, pct: 86 },
+        { role: "Officer / Staff", n: 3, total: 5, pct: 60 },
+      ],
+    },
+  ],
+  categories: [
+    { label: "Send Them Out (Leadership)", n: 32 },
+    { label: "English Conversation Program", n: 24 },
+    { label: "Prajabatan (Askep & Manager)", n: 24 },
+    { label: "BCP Blok 1 (Competency)", n: 16 },
+    { label: "Train of Trainer", n: 13 },
+    { label: "Sertifikasi Auditor ISPO", n: 9 },
+    { label: "Leadership Session", n: 9 },
+    { label: "Pendidikan Formal & Exposure", n: 9 },
+  ],
+  monthly: [
+    { m: "Jan", n: 55 },
+    { m: "Feb", n: 47 },
+    { m: "Apr", n: 14 },
+    { m: "Mei", n: 8 },
+    { m: "Jun", n: 30 },
+    { m: "Jul", n: 20 },
+  ],
+};
+
+export const jobCompetency = {
+  realisasiPeserta: 51,
+  pesertaAktual: 288,
+  pesertaTarget: 565,
+  realisasiBatch: 52,
+  batchAktual: 11,
+  batchTarget: 21,
+  bloks: [
+    { label: "Blok 1", sub: "Assistant / Officer", aktual: 10, target: 14, pct: 71 },
+    { label: "Blok 2", sub: "Head Asst / SH / Spc", aktual: 0, target: 3, pct: 0 },
+    { label: "Blok 3", sub: "Manager / DH / Sr.Spc", aktual: 0, target: 3, pct: 0 },
+    { label: "Blok 4", sub: "Regional Head / GDH", aktual: 1, target: 1, pct: 100 },
+  ],
+  issues: [
+    {
+      no: 1,
+      issue: "Penuntasan Blok 2-3",
+      problem:
+        "Belum terlaksananya Blok 2-3 dikarenakan para pimpinan meminta untuk fokus pada kegiatan operasional dan prioritaskan pelatihan penyusunan anggaran",
+      action: "Penjadwalan dan konfirmasi peserta serta trainer untuk pelaksanaan langsung di bulan Agustus untuk Blok 2 dan 3",
+      q2: "0%",
+      q3: "100%",
+      q4: "",
+    },
+    {
+      no: 2,
+      issue: "Pelaksaan tidak sesuai dengan rencana kalender pelatihan",
+      problem:
+        "Terdapat 2 Batch pada blok 1 yang tidak terlaksana pada bulan Juni dikarenakan terdapat fokus pencapaian produksi pada Region 5A & 5B, minta direschedule pada bulan Agustus",
+      action: "Penjadwalan dan konfirmasi peserta kepada Pak RH dan MDO untuk mendapatkan perijinan pelaksanaan pelatihan BCP Assistant",
+      q2: "50%",
+      q3: "100%",
+      q4: "",
+    },
+    {
+      no: 3,
+      issue: "Kehadiran peserta belum 100% (realisasi mencapai 28-29 orang, 94-98%)",
+      problem:
+        "Adanya pengajuan cuti mendadak dari peserta saat periode pelatihan berlangsung; adanya penarikan peserta secara mendadak (disruption) oleh atasan/pimpinan unit kerja untuk kembali bertugas ke site",
+      action:
+        "Penguncian cuti: cuti biasa dibekukan selama periode pelatihan, kecuali kondisi darurat. Peserta cadangan: menyiapkan 3–5 peserta cadangan (waiting list).",
+      q2: "50%",
+      q3: "100%",
+      q4: "",
+    },
+  ],
+};

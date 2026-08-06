@@ -1,0 +1,315 @@
+.page {
+  padding: 20px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1180px) {
+  .kpiGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .twoCol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.panelCard,
+.tableCard {
+  padding: 14px 16px 16px;
+}
+
+.cardTitle {
+  font: 600 14px var(--font-sans);
+  color: var(--ink);
+}
+.cardSub {
+  font: 400 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+/* KPI5 */
+.batchRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.batchCell {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--content-bg);
+  border-radius: 6px;
+}
+.batchLabel {
+  font: 600 9.5px var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.batchValue {
+  font: 600 22px var(--font-sans);
+  color: var(--ink);
+  margin-top: 4px;
+}
+.batchWindow {
+  font: 400 10.5px var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.outcomeTitle {
+  font: 600 11.5px var(--font-sans);
+  color: var(--ink-mid);
+  margin-top: 16px;
+}
+.outcomeBar {
+  display: flex;
+  height: 9px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.outcomeList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+.outcomeRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.outcomeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex: none;
+}
+.outcomeLabel {
+  font: 600 12px var(--font-sans);
+  color: var(--ink);
+}
+.outcomeNote {
+  font: 400 11px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+.outcomePct {
+  font: 700 13px var(--font-sans);
+}
+
+/* KPI6 */
+.groupBlock {
+  margin-top: 14px;
+}
+.groupHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.groupLabel {
+  font: 700 12.5px var(--font-sans);
+  color: var(--ink);
+}
+.groupPct {
+  font: 700 13px var(--font-sans);
+  color: var(--green);
+}
+.roleRow {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr) 52px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.roleLabel {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-mid);
+}
+.roleTrack {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+.roleFill {
+  height: 100%;
+  border-radius: 3px;
+}
+.roleVal {
+  font: 600 11.5px var(--font-sans);
+  color: var(--ink-mid);
+  text-align: right;
+}
+
+/* Category bars */
+.catList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 14px;
+}
+.catRow {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 8px;
+}
+.catLabel {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-mid);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.catTrack {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+.catFill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--green);
+}
+.catN {
+  font: 600 12px var(--font-sans);
+  color: var(--ink);
+  text-align: right;
+}
+
+/* Monthly bar chart */
+.monthlyChart {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  align-items: end;
+  height: 150px;
+  margin-top: 20px;
+}
+.monthlyBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.monthlyN {
+  font: 600 11px var(--font-sans);
+  color: var(--ink-mid);
+}
+.monthlyTrack {
+  width: 60%;
+  min-height: 4px;
+  background: var(--green);
+  border-radius: 3px 3px 0 0;
+}
+.monthlyLabel {
+  font: 500 10.5px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* KPI7 */
+.blokGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+@media (max-width: 760px) {
+  .blokGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.blokCell {
+  padding: 12px;
+  background: var(--content-bg);
+  border-radius: 6px;
+}
+.blokLabel {
+  font: 700 13px var(--font-sans);
+  color: var(--ink);
+}
+.blokSub {
+  font: 400 10.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+.blokTrack {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-input);
+  margin-top: 10px;
+  overflow: hidden;
+}
+.blokFill {
+  height: 100%;
+  border-radius: 3px;
+}
+.blokVal {
+  font: 500 11px var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 6px;
+}
+
+/* Issues table */
+.tableScroll {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+.table {
+  border-collapse: collapse;
+  min-width: 980px;
+  width: 100%;
+}
+.table th {
+  text-align: right;
+  font: 600 9.5px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  padding: 0 8px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.thLeft {
+  text-align: left !important;
+}
+.table td {
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--border-soft);
+  text-align: right;
+  font: 500 12px/1.45 var(--font-sans);
+  color: var(--ink-mid);
+  vertical-align: top;
+}
+.issueCell {
+  font-weight: 700;
+  color: var(--ink);
+  min-width: 160px;
+}
+.wrapCell {
+  min-width: 260px;
+  white-space: normal;
+}

@@ -1,0 +1,234 @@
+.page {
+  padding: 20px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .twoCol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.panelCard,
+.tableCard {
+  padding: 14px 16px 16px;
+}
+
+.cardTitle {
+  font: 600 14px var(--font-sans);
+  color: var(--ink);
+}
+.cardSub {
+  font: 400 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+.legendRow {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 11px var(--font-sans);
+  color: var(--ink-muted);
+}
+.legendSwatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+
+.critList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 12px;
+}
+.critRow {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 10px;
+}
+.critLabel {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-mid);
+}
+.critBars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.critBarTrack {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+.critBarFill {
+  height: 100%;
+  border-radius: 3px;
+}
+.critAvg {
+  font: 600 12px var(--font-sans);
+  color: var(--ink);
+  text-align: right;
+}
+
+.distBar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+.distList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.distRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.distDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+.distLabel {
+  flex: 1;
+  font: 500 12px var(--font-sans);
+  color: var(--ink-mid);
+}
+.distN {
+  font: 600 12px var(--font-sans);
+  color: var(--ink);
+  width: 24px;
+  text-align: right;
+}
+.distPct {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  width: 34px;
+  text-align: right;
+}
+
+.reactionGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+}
+@media (max-width: 700px) {
+  .reactionGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.reactionCell {
+  padding: 12px;
+  background: var(--content-bg);
+  border-radius: 6px;
+}
+.reactionLabel {
+  font: 600 9.5px var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.reactionValue {
+  font: 600 22px var(--font-sans);
+  color: var(--ink);
+  margin-top: 5px;
+}
+.reactionUnit {
+  font: 500 12px var(--font-sans);
+  color: var(--ink-faint-2);
+  margin-left: 2px;
+}
+.reactionTrack {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border-soft);
+  margin-top: 8px;
+  overflow: hidden;
+}
+.reactionFill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--green);
+}
+.reactionPct {
+  font: 500 11px var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+.tableScroll {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+.table {
+  border-collapse: collapse;
+  min-width: 980px;
+  width: 100%;
+}
+.table th {
+  text-align: right;
+  font: 600 9.5px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  padding: 0 8px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.thLeft {
+  text-align: left !important;
+}
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border-soft);
+  text-align: right;
+  font: 500 12px var(--font-sans);
+  color: var(--ink-mid);
+  white-space: nowrap;
+}
+.progBadge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 11px;
+  color: #fff;
+  font: 700 11px var(--font-sans);
+}
+.nilaiCell {
+  font-weight: 700;
+  color: var(--ink);
+}
+.totalRow td {
+  font-weight: 700;
+  background: var(--content-bg);
+}
