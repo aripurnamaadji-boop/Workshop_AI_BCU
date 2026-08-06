@@ -1,0 +1,79 @@
+:root {
+  --green: #1f6f4a;
+  --green-hover: #155338;
+  --green-tint: #e7f1ea;
+  --green-tint-2: #cfe3d8;
+  --amber: #b77a12;
+  --amber-tint: #fbf0dc;
+  --red: #b3261e;
+  --red-tint: #fbe9e7;
+
+  --ink: #16201b;
+  --ink-mid: #3e4a43;
+  --ink-muted: #66716b;
+  --ink-faint: #8a938c;
+  --ink-faint-2: #a3aba6;
+
+  --page-bg: #e8eae8;
+  --content-bg: #f2f3f2;
+  --card-bg: #fff;
+  --border: #e2e5e3;
+  --border-soft: #edefee;
+  --border-input: #dde1de;
+  --row-hover: #fafbfa;
+
+  --sidebar-bg: #14231c;
+  --sidebar-border: rgba(255, 255, 255, 0.09);
+  --sidebar-fg: #b9c4bd;
+  --sidebar-fg-muted: #7e8f86;
+  --sidebar-fg-faint: #5e6f66;
+  --sidebar-fg-dim: #8fa398;
+  --sidebar-live: #4eae7b;
+
+  --font-sans: "Source Sans 3", system-ui, sans-serif;
+  --font-mono: "Source Code Pro", monospace;
+
+  --sidebar-w: 242px;
+  --topbar-h: 58px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--page-bg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  color: var(--ink);
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--green-hover);
+  text-decoration: underline;
+}
+
+select,
+button {
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--green-tint-2);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

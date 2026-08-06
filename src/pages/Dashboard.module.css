@@ -1,0 +1,378 @@
+.page {
+  padding: 20px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1180px) {
+  .kpiGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 348px;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1180px) {
+  .mainGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.programCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.programHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.programTitle {
+  font: 600 14px var(--font-sans);
+  color: var(--ink);
+}
+.programSub {
+  font: 400 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+.tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--content-bg);
+  padding: 3px;
+  border-radius: 6px;
+}
+.tab {
+  padding: 6px 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  font: 500 12px var(--font-sans);
+  border: none;
+  background: transparent;
+  color: var(--ink-muted);
+}
+.tab.active {
+  background: #fff;
+  font-weight: 600;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 14px 16px 0;
+}
+@media (max-width: 640px) {
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 12px;
+  }
+}
+.statCell {
+  padding: 0 14px 0 0;
+  border-right: 1px solid var(--border-soft);
+}
+.statLabel {
+  font: 500 9.5px var(--font-mono);
+  letter-spacing: 0.07em;
+  color: var(--ink-faint);
+}
+.statValue {
+  font: 600 22px/1.1 var(--font-sans);
+  color: var(--ink);
+  margin-top: 5px;
+}
+.statSub {
+  font: 400 11px var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.timelineBox {
+  padding: 16px 16px 6px;
+}
+.timelineHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.timelineTag {
+  font: 500 9.5px var(--font-mono);
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+.legend {
+  display: flex;
+  gap: 12px;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 400 10.5px var(--font-sans);
+  color: var(--ink-muted);
+}
+.legendSwatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+.chart {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 5px;
+  align-items: end;
+  height: 78px;
+}
+.month {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 2px;
+}
+.planBar {
+  position: relative;
+  background: var(--green-tint-2);
+  border-radius: 2px 2px 0 0;
+}
+.actBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 2px 2px 0 0;
+}
+.monthLabel {
+  font: 400 9.5px var(--font-mono);
+  color: var(--ink-faint-2);
+  text-align: center;
+}
+
+.tableBox {
+  padding: 8px 16px 16px;
+  overflow-x: auto;
+}
+.tableHead,
+.tableRow {
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr 1.5fr 0.7fr 0.8fr;
+  gap: 10px;
+  min-width: 620px;
+}
+.tableHead {
+  padding: 0 0 7px;
+  border-bottom: 1px solid var(--border);
+}
+.th {
+  font: 500 9.5px var(--font-mono);
+  letter-spacing: 0.07em;
+  color: var(--ink-faint);
+}
+.thRight {
+  text-align: right;
+}
+.tableRow {
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.tableRow:hover {
+  background: var(--row-hover);
+}
+.progName {
+  font: 600 13px/1.25 var(--font-sans);
+  color: var(--ink);
+}
+.progMeta {
+  font: 400 10.5px var(--font-mono);
+  color: var(--ink-faint-2);
+  margin-top: 2px;
+}
+.progParticip {
+  font: 500 12.5px var(--font-sans);
+  color: var(--ink-mid);
+}
+.progParticip span {
+  color: var(--ink-faint-2);
+}
+.progBarTrack {
+  position: relative;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--border-soft);
+  overflow: hidden;
+}
+.progBarFill {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+}
+.progBarNote {
+  font: 400 10px var(--font-mono);
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+.progBudget {
+  font: 500 12.5px var(--font-sans);
+  color: var(--ink-mid);
+  text-align: right;
+}
+.progStatus {
+  text-align: right;
+}
+
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sideCard {
+  padding: 14px 15px;
+}
+
+.sideCardHead {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.sideCardTitle {
+  font: 600 14px var(--font-sans);
+  color: var(--ink);
+}
+.countPill {
+  font: 600 10.5px var(--font-sans);
+  background: var(--red-tint);
+  color: var(--red);
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.attentionList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.attentionRow {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.attentionRow:hover {
+  background: var(--row-hover);
+}
+.attentionBar {
+  width: 3px;
+  flex: none;
+  border-radius: 2px;
+}
+.attentionTitle {
+  font: 600 12.5px/1.3 var(--font-sans);
+  color: var(--ink);
+}
+.attentionBody {
+  font: 400 11.5px/1.4 var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+.attentionMetric {
+  font: 600 11px var(--font-sans);
+  white-space: nowrap;
+}
+
+.popTitle {
+  font: 600 14px var(--font-sans);
+  color: var(--ink);
+}
+.popSub {
+  font: 400 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.waffle {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 3px;
+  margin-top: 13px;
+}
+.popStats {
+  display: flex;
+  gap: 14px;
+  margin-top: 13px;
+}
+.popStat {
+  flex: 1;
+}
+.popStatLabel {
+  font: 400 10.5px var(--font-sans);
+  color: var(--ink-faint);
+}
+.popStatValue {
+  font: 600 17px var(--font-sans);
+}
+
+.quickLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 9px;
+}
+.quickLink {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+.quickLink:hover {
+  background: var(--content-bg);
+}
+.quickLinkNum {
+  font: 500 9.5px var(--font-mono);
+  color: var(--ink-faint);
+  width: 16px;
+}
+.quickLinkLabel {
+  flex: 1;
+  font: 500 12.5px var(--font-sans);
+  color: var(--ink);
+}
+.quickLinkVal {
+  font: 600 12px var(--font-sans);
+  color: var(--green);
+}

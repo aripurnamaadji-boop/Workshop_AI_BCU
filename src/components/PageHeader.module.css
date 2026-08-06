@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font: 600 19px/1.2 var(--font-sans);
+  color: var(--ink);
+}
+
+.subtitle {
+  font: 400 13px/1.4 var(--font-sans);
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+
+.pills {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pillLabel {
+  font: 500 9.5px var(--font-mono);
+  letter-spacing: 0.07em;
+  color: var(--ink-faint);
+}
+
+.pill {
+  font: 500 11px var(--font-sans);
+  color: var(--green);
+  background: var(--green-tint);
+  padding: 3px 8px;
+  border-radius: 11px;
+}
+
+@media (max-width: 960px) {
+  .pills {
+    display: none;
+  }
+}
