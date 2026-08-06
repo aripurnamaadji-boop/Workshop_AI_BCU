@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { getSql } from "../_lib/db.js";
 import { requireAuth } from "../_lib/auth.js";
+import { ensureChatTables, titleFromMessage } from "../_lib/chat.js";
 import { buildBcuDigest, latestPeriod } from "../_lib/bcuDigest.js";
 import { callAi, type ChatMessage } from "../_lib/aiClient.js";
-
-const MAX_HISTORY = 20;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -14,20 +14,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!user) return;
 
   const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
-  const rawMessages = Array.isArray(body.messages) ? body.messages : [];
-  const messages: ChatMessage[] = rawMessages
-    .filter((m: unknown): m is ChatMessage => {
-      const mm = m as ChatMessage;
-      return !!mm && (mm.role === "user" || mm.role === "assistant") && typeof mm.content === "string" && mm.content.trim().length > 0;
-    })
-    .slice(-MAX_HISTORY);
+  const conversationId = Number(body.conversationId);
+  const message = typeof body.message === "string" ? body.message.trim() : "";
 
-  if (messages.length === 0) {
-    res.status(400).json({ error: "messages kosong" });
+  if (!Number.isInteger(conversationId)) {
+    res.status(400).json({ error: "conversationId wajib diisi" });
+    return;
+  }
+  if (!message) {
+    res.status(400).json({ error: "message kosong" });
     return;
   }
 
   try {
+    await ensureChatTables();
+    const sql = getSql();
+
+    const owned = await sql`SELECT id, title FROM bcu_chat_conversations WHERE id = ${conversationId} AND user_id = ${user.id}`;
+    if (owned.length === 0) {
+      res.status(404).json({ error: "Percakapan tidak ditemukan" });
+      return;
+    }
+    const conversation = owned[0] as { id: number; title: string };
+
+    await sql`INSERT INTO bcu_chat_messages (conversation_id, role, content) VALUES (${conversationId}, 'user', ${message})`;
+
+    const history = await sql`
+      SELECT role, content FROM bcu_chat_messages WHERE conversation_id = ${conversationId} ORDER BY id ASC
+    `;
+    const messages = history as ChatMessage[];
+
     const period = await latestPeriod();
     const digest = period ? await buildBcuDigest(period) : "Belum ada data BCU Development Program di database.";
 
@@ -43,7 +59,13 @@ Snapshot data BCU Development Program saat ini:
 ${digest}`;
 
     const { text } = await callAi(messages, { system, maxTokens: 700 });
-    res.status(200).json({ reply: text });
+
+    await sql`INSERT INTO bcu_chat_messages (conversation_id, role, content) VALUES (${conversationId}, 'assistant', ${text})`;
+
+    const newTitle = conversation.title === "Percakapan baru" ? titleFromMessage(message) : conversation.title;
+    await sql`UPDATE bcu_chat_conversations SET updated_at = now(), title = ${newTitle} WHERE id = ${conversationId}`;
+
+    res.status(200).json({ reply: text, title: newTitle });
   } catch (err) {
     res.status(500).json({ error: err instanceof Error ? err.message : String(err) });
   }

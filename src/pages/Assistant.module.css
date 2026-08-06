@@ -6,6 +6,110 @@
   height: 100%;
 }
 
+.layout {
+  flex: 1;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 14px;
+}
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  gap: 10px;
+  min-height: 0;
+}
+
+.newBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 34px;
+  border-radius: 6px;
+  border: 1px solid var(--border-input);
+  background: var(--content-bg);
+  color: var(--ink-mid);
+  font: 700 12px var(--font-sans);
+  cursor: pointer;
+  flex: none;
+}
+.newBtn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.convList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.convEmpty {
+  font: 500 11.5px var(--font-sans);
+  color: var(--ink-faint);
+  padding: 8px 6px;
+}
+
+.convItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.convItem:hover {
+  background: var(--content-bg);
+}
+.convActive {
+  background: var(--green-tint);
+}
+.convTitle {
+  flex: 1;
+  min-width: 0;
+  font: 500 12px var(--font-sans);
+  color: var(--ink-mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.convActive .convTitle {
+  color: var(--green);
+  font-weight: 600;
+}
+.convDelete {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--ink-faint-2);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+}
+.convItem:hover .convDelete {
+  opacity: 1;
+}
+.convDelete:hover {
+  background: var(--red-tint);
+  color: var(--red);
+}
+
 .chatCard {
   flex: 1;
   min-height: 560px;
@@ -15,6 +119,7 @@
   border: 1px solid var(--border);
   border-radius: 6px;
   overflow: hidden;
+  min-width: 0;
 }
 
 .messages {
