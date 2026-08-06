@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getSql } from "../_lib/db.js";
 import { firstEnv, AI_KEY_KEYS } from "../_lib/env.js";
+import { requireAuth } from "../_lib/auth.js";
 
 function pct(aktual: number | null, target: number | null): string {
   if (!target) return "-";
@@ -48,6 +49,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
+  if (!(await requireAuth(req, res))) return;
 
   const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
   const period: string | undefined = body.period;

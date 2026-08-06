@@ -56,6 +56,8 @@
   place-items: center;
   font: 600 11px var(--font-sans);
   color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 .chips {

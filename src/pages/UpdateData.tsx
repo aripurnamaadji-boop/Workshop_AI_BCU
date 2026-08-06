@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import PageHeader from "../components/PageHeader";
 import Card from "../components/Card";
 import {
@@ -11,6 +11,8 @@ import {
   type BcuRow,
 } from "../data/bcuApi";
 import styles from "./UpdateData.module.css";
+
+type AppUser = { username: string; createdAt: string };
 
 const CATEGORY_ORDER: BcuCategory[] = ["grand", "killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
 
@@ -46,7 +48,54 @@ export default function UpdateData() {
 
   useEffect(() => {
     load();
+    loadUsers();
   }, []);
+
+  const [users, setUsers] = useState<AppUser[]>([]);
+  const [usersLoading, setUsersLoading] = useState(true);
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [addingUser, setAddingUser] = useState(false);
+  const [userError, setUserError] = useState<string | null>(null);
+  const [userMsg, setUserMsg] = useState<string | null>(null);
+
+  async function loadUsers() {
+    setUsersLoading(true);
+    try {
+      const res = await fetch("/api/auth/users");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal memuat daftar user");
+      setUsers(data.users);
+    } catch (err) {
+      setUserError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setUsersLoading(false);
+    }
+  }
+
+  async function handleAddUser(e: FormEvent) {
+    e.preventDefault();
+    setAddingUser(true);
+    setUserError(null);
+    setUserMsg(null);
+    try {
+      const res = await fetch("/api/auth/users", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ username: newUsername.trim(), password: newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal menambah user");
+      setUserMsg(`User "${data.username}" berhasil dibuat`);
+      setNewUsername("");
+      setNewPassword("");
+      await loadUsers();
+    } catch (err) {
+      setUserError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setAddingUser(false);
+    }
+  }
 
   const grouped = useMemo(() => {
     const map = new Map<BcuCategory, EditableRow[]>();
@@ -177,6 +226,52 @@ export default function UpdateData() {
           );
         })
       )}
+
+      <Card className={styles.groupCard}>
+        <div className={styles.groupTitle}>Kelola User</div>
+        <div className={styles.userLayout}>
+          <div className={styles.userList}>
+            {usersLoading ? (
+              <div className={styles.userEmpty}>Memuat daftar user...</div>
+            ) : users.length === 0 ? (
+              <div className={styles.userEmpty}>Belum ada user.</div>
+            ) : (
+              users.map((u) => (
+                <div key={u.username} className={styles.userRow}>
+                  <span className={styles.userAvatar}>{u.username.slice(0, 2).toUpperCase()}</span>
+                  <span className={styles.userName}>{u.username}</span>
+                </div>
+              ))
+            )}
+          </div>
+
+          <form className={styles.userForm} onSubmit={handleAddUser}>
+            <div className={styles.userFormTitle}>Tambah user baru</div>
+            <input
+              className={styles.userInput}
+              type="text"
+              placeholder="Username (mis. nama.belakang)"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+              required
+            />
+            <input
+              className={styles.userInput}
+              type="text"
+              placeholder="Password (min. 6 karakter)"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              minLength={6}
+              required
+            />
+            {userError && <div className={styles.errorMsg}>{userError}</div>}
+            {userMsg && <div className={styles.savedMsg}>{userMsg}</div>}
+            <button className={styles.saveBtn} type="submit" disabled={addingUser}>
+              {addingUser ? "Menyimpan..." : "Tambah User"}
+            </button>
+          </form>
+        </div>
+      </Card>
     </div>
   );
 }

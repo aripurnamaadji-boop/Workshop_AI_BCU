@@ -1,7 +1,24 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { filters } from "../data/mockData";
+import { useAuth } from "../auth/AuthContext";
 import styles from "./Topbar.module.css";
 
+function initialsOf(username: string): string {
+  const parts = username.replace(/[._-]+/g, " ").trim().split(/\s+/);
+  return parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("") || "?";
+}
+
 export default function Topbar({ title }: { title: string }) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  async function handleLogout() {
+    await logout();
+    navigate("/login", { replace: true });
+  }
+
   return (
     <header className={styles.topbar}>
       <div className={styles.title}>{title}</div>
@@ -26,7 +43,22 @@ export default function Topbar({ title }: { title: string }) {
           </svg>
           Ekspor
         </div>
-        <div className={styles.avatar}>HS</div>
+        <div className={styles.userMenu}>
+          <button className={styles.avatar} onClick={() => setMenuOpen((v) => !v)} aria-label="Menu akun">
+            {user ? initialsOf(user.username) : "?"}
+          </button>
+          {menuOpen && (
+            <>
+              <div className={styles.menuScrim} onClick={() => setMenuOpen(false)} />
+              <div className={styles.menuPanel}>
+                <div className={styles.menuUsername}>{user?.username}</div>
+                <button className={styles.menuLogout} onClick={handleLogout}>
+                  Keluar
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

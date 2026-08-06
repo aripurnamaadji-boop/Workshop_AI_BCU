@@ -1,0 +1,21 @@
+.loadingScreen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--sidebar-bg);
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--sidebar-live);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

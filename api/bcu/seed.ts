@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getSql } from "../_lib/db.js";
+import { requireAuth } from "../_lib/auth.js";
 import { SEED_ROWS, SEED_PERIOD } from "../_lib/bcuSeed.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -7,6 +8,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
+  if (!(await requireAuth(req, res))) return;
 
   try {
     const sql = getSql();
