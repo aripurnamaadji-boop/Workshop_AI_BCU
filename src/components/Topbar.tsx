@@ -6,7 +6,7 @@ import { useFilters, type ProgramFilter } from "../filters/FilterContext";
 import { CATEGORY_LABELS, periodLabel, type BcuCategory } from "../data/bcuApi";
 import styles from "./Topbar.module.css";
 
-const PROGRAM_OPTIONS: ProgramFilter[] = ["all", "killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
+const PROGRAM_OPTIONS: ProgramFilter[] = ["all", "grand", "killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
 
 function programLabel(p: ProgramFilter): string {
   return p === "all" ? "Semua program" : CATEGORY_LABELS[p as BcuCategory];

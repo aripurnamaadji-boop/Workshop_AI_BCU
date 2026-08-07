@@ -17,7 +17,7 @@ import {
 import { useFilters } from "../filters/FilterContext";
 import styles from "./Dashboard.module.css";
 
-const TAB_CATEGORIES: BcuCategory[] = ["killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
+const TAB_CATEGORIES: BcuCategory[] = ["grand", "killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
 const SEGMENT_COLORS = ["#1f6f4a", "#2f5d7c", "#c99a2e", "#7c4a2f", "#5c9a7b"];
 const OTHERS_COLOR = "#c3cbc6";
 
@@ -27,7 +27,7 @@ function pct(aktual: number | null | undefined, target: number | null | undefine
 }
 
 export default function Dashboard() {
-  const [tab, setTabState] = useState<BcuCategory>("killer_staff");
+  const [tab, setTabState] = useState<BcuCategory>("grand");
   const navigate = useNavigate();
   const { program, setProgram, period, setPeriod, setAvailablePeriods } = useFilters();
 
@@ -97,10 +97,15 @@ export default function Dashboard() {
 
   const grandTotal = useMemo(() => data?.rows.find((r) => r.category === "grand"), [data]);
   const categoryTotal = useMemo(() => data?.rows.find((r) => r.category === tab && r.rowType === "category_total"), [data, tab]);
-  const itemRows = useMemo(
-    () => (data?.rows.filter((r) => r.category === tab && r.rowType === "item") ?? []).sort((a, b) => a.sortOrder - b.sortOrder),
-    [data, tab],
-  );
+  const itemRows = useMemo(() => {
+    if (!data) return [];
+    if (tab === "grand") {
+      // The grand total has no item-level rows of its own — show the 5
+      // category totals as its "detail" so the overview tab isn't empty.
+      return data.rows.filter((r) => r.rowType === "category_total" && r.category !== "grand").sort((a, b) => a.sortOrder - b.sortOrder);
+    }
+    return data.rows.filter((r) => r.category === tab && r.rowType === "item").sort((a, b) => a.sortOrder - b.sortOrder);
+  }, [data, tab]);
   const funnel = useMemo(() => {
     if (!categoryTotal || !data?.period) return null;
 
