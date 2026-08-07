@@ -4,6 +4,7 @@ import PageHeader from "../components/PageHeader";
 import Card from "../components/Card";
 import KpiCard from "../components/KpiCard";
 import Badge from "../components/Badge";
+import FunnelInsight, { type BreakdownSegment, type FunnelStage } from "../components/FunnelInsight";
 import { attention, kpis, quicklinks, statusOf, waffle } from "../data/mockData";
 import {
   CATEGORY_LABELS,
@@ -17,6 +18,8 @@ import { useFilters } from "../filters/FilterContext";
 import styles from "./Dashboard.module.css";
 
 const TAB_CATEGORIES: BcuCategory[] = ["killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
+const SEGMENT_COLORS = ["#1f6f4a", "#2f5d7c", "#c99a2e", "#7c4a2f", "#5c9a7b"];
+const OTHERS_COLOR = "#c3cbc6";
 
 function pct(aktual: number | null | undefined, target: number | null | undefined): number {
   if (!target) return 0;
@@ -98,11 +101,56 @@ export default function Dashboard() {
     () => (data?.rows.filter((r) => r.category === tab && r.rowType === "item") ?? []).sort((a, b) => a.sortOrder - b.sortOrder),
     [data, tab],
   );
-  const categoryHistory = useMemo(
-    () => (data?.history.filter((h) => h.category === tab) ?? []).sort((a, b) => (a.period < b.period ? -1 : 1)),
-    [data, tab],
-  );
-  const maxBiTarget = Math.max(1, ...categoryHistory.map((h) => h.biTarget ?? 0));
+  const funnel = useMemo(() => {
+    if (!categoryTotal || !data?.period) return null;
+
+    const target2026 = categoryTotal.target2026;
+    const sdbiTarget = categoryTotal.sdbiTarget ?? 0;
+    const sdbiAktual = categoryTotal.sdbiAktual ?? 0;
+    const fyPct = pct(sdbiAktual, target2026);
+    const sdbiPct = pct(sdbiAktual, sdbiTarget);
+    const targetPct = pct(sdbiTarget, target2026);
+    const monthLabel = periodLabel(data.period);
+    const catLabel = CATEGORY_LABELS[tab];
+
+    const headline =
+      sdbiPct >= 95
+        ? `${catLabel} sudah merealisasikan ${sdbiPct}% dari target periode berjalan — nyaris sesuai rencana, tapi baru ${fyPct}% dari target tahunan 2026.`
+        : `${catLabel} baru merealisasikan ${sdbiPct}% dari target periode berjalan (${fyPct}% dari target tahunan 2026) — menyisakan gap ${Math.max(sdbiTarget - sdbiAktual, 0)} peserta/unit untuk dikejar.`;
+
+    const subtitle = `Dari target tahunan ${target2026}, BCU menetapkan target ${sdbiTarget} s.d. ${monthLabel} — dan berhasil merealisasikan ${sdbiAktual}.`;
+
+    const stages: FunnelStage[] = [
+      { value: target2026.toLocaleString("id-ID"), caption: "Target tahunan 2026" },
+      { value: sdbiTarget.toLocaleString("id-ID"), caption: `Target s.d. ${monthLabel}`, pctOfPrev: `${targetPct}%` },
+      { value: sdbiAktual.toLocaleString("id-ID"), caption: `Realisasi s.d. ${monthLabel}`, pctOfPrev: `${sdbiPct}%` },
+    ];
+
+    const contributors = itemRows
+      .filter((r) => (r.sdbiAktual ?? 0) > 0)
+      .sort((a, b) => (b.sdbiAktual ?? 0) - (a.sdbiAktual ?? 0));
+    const total = contributors.reduce((sum, r) => sum + (r.sdbiAktual ?? 0), 0);
+    const top = contributors.slice(0, 4);
+    const restValue = contributors.slice(4).reduce((sum, r) => sum + (r.sdbiAktual ?? 0), 0);
+
+    const breakdown: BreakdownSegment[] =
+      total > 0
+        ? [
+            ...top.map((r, i) => ({
+              label: r.approach,
+              value: r.sdbiAktual ?? 0,
+              pct: Math.round(((r.sdbiAktual ?? 0) / total) * 100),
+              color: SEGMENT_COLORS[i % SEGMENT_COLORS.length],
+              highlight: i === 0,
+            })),
+            ...(restValue > 0
+              ? [{ label: "Program lainnya", value: restValue, pct: Math.round((restValue / total) * 100), color: OTHERS_COLOR }]
+              : []),
+          ]
+        : [];
+
+    return { headline, subtitle, stages, breakdown };
+  }, [categoryTotal, itemRows, tab, data?.period]);
 
   return (
     <div className={styles.page}>
@@ -200,39 +248,14 @@ export default function Dashboard() {
             </div>
           )}
 
-          {categoryHistory.length > 0 && (
-            <div className={styles.timelineBox}>
-              <div className={styles.timelineHead}>
-                <span className={styles.timelineTag}>REALISASI BULANAN (BI) · {CATEGORY_LABELS[tab].toUpperCase()}</span>
-                <div className={styles.legend}>
-                  <span className={styles.legendItem}>
-                    <span className={styles.legendSwatch} style={{ background: "#cfe3d8" }} /> Rencana
-                  </span>
-                  <span className={styles.legendItem}>
-                    <span className={styles.legendSwatch} style={{ background: "#1f6f4a" }} /> Realisasi
-                  </span>
-                </div>
-              </div>
-              <div className={styles.chart} style={{ gridTemplateColumns: `repeat(${categoryHistory.length}, 1fr)` }}>
-                {categoryHistory.map((h) => {
-                  const p = pct(h.biAktual, h.biTarget) / 100;
-                  const color = p >= 0.85 ? "#1f6f4a" : p >= 0.6 ? "#b77a12" : "#b3261e";
-                  const planH = Math.round(((h.biTarget ?? 0) / maxBiTarget) * 62) + 6;
-                  return (
-                    <div
-                      key={h.period}
-                      className={styles.month}
-                      title={`Rencana ${h.biTarget ?? 0} · realisasi ${h.biAktual ?? 0}`}
-                    >
-                      <div className={styles.planBar} style={{ height: planH }}>
-                        <div className={styles.actBar} style={{ height: `${Math.min(p * 100, 100)}%`, background: color }} />
-                      </div>
-                      <div className={styles.monthLabel}>{periodLabel(h.period).split(" ")[0]}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          {funnel && (
+            <FunnelInsight
+              headline={funnel.headline}
+              subtitle={funnel.subtitle}
+              stages={funnel.stages}
+              breakdownTitle={`KONTRIBUTOR REALISASI TERBESAR · ${CATEGORY_LABELS[tab].toUpperCase()}`}
+              breakdown={funnel.breakdown}
+            />
           )}
 
           <div className={styles.tableBox}>
