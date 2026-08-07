@@ -13,6 +13,7 @@ import {
   type BcuCategory,
   type BcuProgramsResponse,
 } from "../data/bcuApi";
+import { useFilters } from "../filters/FilterContext";
 import styles from "./Dashboard.module.css";
 
 const TAB_CATEGORIES: BcuCategory[] = ["killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
@@ -23,8 +24,9 @@ function pct(aktual: number | null | undefined, target: number | null | undefine
 }
 
 export default function Dashboard() {
-  const [tab, setTab] = useState<BcuCategory>("killer_staff");
+  const [tab, setTabState] = useState<BcuCategory>("killer_staff");
   const navigate = useNavigate();
+  const { program, setProgram, period, setPeriod, setAvailablePeriods } = useFilters();
 
   const [data, setData] = useState<BcuProgramsResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -35,12 +37,23 @@ export default function Dashboard() {
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [summaryError, setSummaryError] = useState<string | null>(null);
 
-  async function load() {
+  function setTab(cat: BcuCategory) {
+    setTabState(cat);
+    setProgram(cat);
+  }
+
+  useEffect(() => {
+    if (program !== "all" && program !== tab) setTabState(program);
+  }, [program]);
+
+  async function load(p?: string) {
     setLoading(true);
     setLoadError(null);
     try {
-      const res = await fetchBcuPrograms();
+      const res = await fetchBcuPrograms(p);
       setData(res);
+      setAvailablePeriods(res.periods);
+      if (res.period && res.period !== period) setPeriod(res.period);
     } catch (err) {
       setLoadError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -49,15 +62,15 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    load();
-  }, []);
+    load(period ?? undefined);
+  }, [period]);
 
   async function handleSeed() {
     setSeeding(true);
     try {
       const res = await fetch("/api/bcu/seed", { method: "POST" });
       if (!res.ok) throw new Error(`Seed gagal (HTTP ${res.status})`);
-      await load();
+      await load(period ?? undefined);
     } catch (err) {
       setLoadError(err instanceof Error ? err.message : String(err));
     } finally {
