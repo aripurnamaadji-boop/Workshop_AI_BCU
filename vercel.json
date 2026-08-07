@@ -1,6 +1,10 @@
 {
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/gateway?path=:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
   "functions": {
-    "api/[...path].ts": {
+    "api/gateway.ts": {
       "maxDuration": 15
     }
   }

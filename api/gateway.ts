@@ -13,12 +13,16 @@ import aiChat from "./_lib/handlers/aiChat.js";
 import aiConversationsIndex from "./_lib/handlers/aiConversationsIndex.js";
 import aiConversationsId from "./_lib/handlers/aiConversationsId.js";
 
-// Single catch-all Vercel Function for the whole /api surface. Vercel's Hobby
-// plan caps a deployment at 12 Serverless Functions; routing everything
-// through one dynamic file keeps the count at 1 no matter how many endpoints
-// this app grows to, while every /api/* URL below stays exactly the same.
+// Single Vercel Function for the whole /api surface, reached via a
+// vercel.json rewrite (/api/:path* -> /api/gateway?path=:path*). Vercel's
+// Hobby plan caps a deployment at 12 Serverless Functions; routing
+// everything through one plain (non-dynamically-named) file keeps the count
+// at 1 no matter how many endpoints this app grows to, while every
+// /api/* URL the frontend calls stays exactly the same.
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const parts = ([] as string[]).concat(req.query.path ?? []);
+  const rawPath = req.query.path;
+  const pathStr = Array.isArray(rawPath) ? rawPath.join("/") : rawPath ?? "";
+  const parts = pathStr.split("/").filter(Boolean);
   const [a, b, c] = parts;
 
   if (a === "status" && !b) return status(req, res);
