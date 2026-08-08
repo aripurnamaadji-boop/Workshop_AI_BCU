@@ -15,6 +15,8 @@ import {
   type BcuProgramsResponse,
 } from "../data/bcuApi";
 import { useFilters } from "../filters/FilterContext";
+import { useAuth } from "../auth/AuthContext";
+import { lastNameOf } from "../auth/userDisplay";
 import styles from "./Dashboard.module.css";
 
 const TAB_CATEGORIES: BcuCategory[] = ["grand", "killer_staff", "killer_nonstaff", "reguler", "mandatory", "talent"];
@@ -29,6 +31,7 @@ function pct(aktual: number | null | undefined, target: number | null | undefine
 export default function Dashboard() {
   const [tab, setTabState] = useState<BcuCategory>("grand");
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { program, setProgram, period, setPeriod, setAvailablePeriods } = useFilters();
 
   const [data, setData] = useState<BcuProgramsResponse | null>(null);
@@ -160,7 +163,7 @@ export default function Dashboard() {
   return (
     <div className={styles.page}>
       <PageHeader
-        title="Selamat pagi, Hendra."
+        title={`Selamat pagi, ${user ? lastNameOf(user.username) : ""}.`}
         subtitle="Rabu, 5 Agustus 2026 · Data per kuartal berjalan (Q3 2026) · 11.482 karyawan target"
         pills={["Q3 2026", "Semua region", "Semua level"]}
       />

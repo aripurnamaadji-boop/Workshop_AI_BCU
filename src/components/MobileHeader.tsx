@@ -1,11 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import { initialsOf } from "../auth/userDisplay";
 import styles from "./MobileHeader.module.css";
-
-function initialsOf(username: string): string {
-  const parts = username.replace(/[._-]+/g, " ").trim().split(/\s+/);
-  return parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("") || "?";
-}
 
 export default function MobileHeader({
   title,

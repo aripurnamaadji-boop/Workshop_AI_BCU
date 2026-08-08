@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { filters } from "../data/mockData";
 import { useAuth } from "../auth/AuthContext";
+import { initialsOf } from "../auth/userDisplay";
 import { useFilters, type ProgramFilter } from "../filters/FilterContext";
 import { CATEGORY_LABELS, periodLabel, type BcuCategory } from "../data/bcuApi";
 import styles from "./Topbar.module.css";
@@ -10,11 +11,6 @@ const PROGRAM_OPTIONS: ProgramFilter[] = ["all", "grand", "killer_staff", "kille
 
 function programLabel(p: ProgramFilter): string {
   return p === "all" ? "Semua program" : CATEGORY_LABELS[p as BcuCategory];
-}
-
-function initialsOf(username: string): string {
-  const parts = username.replace(/[._-]+/g, " ").trim().split(/\s+/);
-  return parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("") || "?";
 }
 
 export default function Topbar({ title }: { title: string }) {
